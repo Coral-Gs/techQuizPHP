@@ -1,0 +1,133 @@
+html,
+body {
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 900;
+  margin-top: 60px;
+}
+
+section {
+  flex: 1;
+}
+
+footer {
+  background-color: rgb(123, 63, 182);
+  color: #fff;
+  font-size: 14px;
+  margin-top: 0 auto;
+  padding: 10px;
+}
+
+#juego {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 100px 20px 100px;
+}
+
+#mensaje-final {
+  border-color: rgb(123, 63, 182);
+  border-radius: 0.5em;
+  border-style: solid;
+  color: #000;
+  font-size: 25px;
+  font-weight: 600;
+  padding: 30px;
+  max-width: fit-content;
+  margin: 0 auto;
+  line-height: 50px;
+}
+
+.boton-start {
+  border-style: none;
+  border-radius: 0.5em;
+  background-color: rgb(123, 63, 182);
+  color: #fff;
+  font-size: 30px;
+  padding: 20px 50px;
+  margin: 30px;
+  cursor: pointer;
+}
+
+.boton-start:hover {
+  background-color: rgb(0, 0, 0);
+  transition: 0.2s;
+}
+
+.pregunta {
+  border-style: solid;
+  border-color: rgb(79, 77, 75);
+  margin: 0 auto;
+}
+
+/*Estilos de botones de respuesta */
+.boton-respuesta {
+  border-style: none;
+  border-radius: 0.2em;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 20px;
+  padding: 20px 50px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/*Estilos de botones de respuesta cuando están activados y se pasa el ratón por encima*/
+.boton-respuesta:hover:enabled {
+  background-color: #fff;
+  border-style: solid;
+  border-color: rgb(123, 63, 182);
+  font-weight: 600;
+  font-size: 24px;
+  color: #000;
+  transition: 0.2s;
+}
+
+/*Estilos de botones de respuesta 
+cuando ya se ha seleccionado uno y están desactivados*/
+.boton-respuesta:disabled {
+  background-color: grey;
+}
+
+#correcto {
+  color: rgb(49, 124, 39);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#incorrecto {
+  color: rgb(172, 16, 16);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#marcadores {
+  margin: 30px 100px 40px;
+}
+
+#puntuacion {
+  font-size: 25px;
+  font-weight: 600;
+  margin: 20px;
+}
+
+.cuenta-atras {
+  border-style: solid;
+  border-color: rgb(128, 135, 141);
+  border-radius: 0.2em;
+  font-size: 30px;
+  width: 100px;
+  height: 35px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
