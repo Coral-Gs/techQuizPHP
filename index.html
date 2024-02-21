@@ -17,6 +17,16 @@
         <div id="puntuacion"></div>
       </div>
     </section>
+    <section>
+       <form id="formulario">
+        <input type="text" id="nombre" minlength="2" maxlength="25" pattern="[A-Za-z0-9]+" title="Solo se permiten letras y números" placeholder="Name" required><br>
+        <input type="email" id="email" placeholder="email" required><br>
+        <input type="date" id="fecha" placeholder="date yyyy-mm-dd" required><br>
+        <input type="submit" id="boton-registrar" value="Add score">
+      </form>
+      <div id="validaciones"></div>
+      <div id="resultados"></div>
+    </section>
     <footer>
       <div>Coded with ♡ by Coral Gutiérrez</div>
       <hr />
@@ -24,6 +34,8 @@
     </footer>
     <!--JS que maneja API-->
     <script src="javascript/api.js"></script>
+     <!--JS validaciones-->
+    <script src="javascript/validaciones.js"></script>
     <!--JS con Bom Dom y eventos-->
     <script src="javascript/dombom.js"></script>
   </body>

@@ -2,14 +2,22 @@
 //para activar la funcionalidad del boton Start
 window.addEventListener("load", inicio);
 
-//JQUERY añado efecto inicial al título para que aumente de tamaño de manera animada
-$(document).ready(function () {
-  $("#titulo").animate({ fontSize: "2.7em" }, "slow");
-});
-
 //El boton Start llama a la función iniciarJuego
 function inicio() {
+  //JQUERY añado efecto inicial al título para que aumente de tamaño de manera animada
+  $(document).ready(function () {
+    $("#titulo").animate({ fontSize: "2.7em" }, "slow");
+  });
+  //Oculto formulario de registro para mostrar al final
+  $("#formulario").hide();
+  //Añado manejadores de eventos a botones del DOM
   document.getElementById("start").addEventListener("click", iniciarJuego);
+  document
+    .getElementById("boton-registrar")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      validarCampos();
+    });
 }
 
 //FUNCIÓN PARA MOSTRAR PREGUNTAS
@@ -57,7 +65,7 @@ function validarRespuesta(botonRes, resCorrecta) {
   let mensaje = document.createElement("p");
 
   if (botonRes.innerHTML == respuestaCorrecta) {
-    //Si la respuesta es correcta el botón cambia a verde y aparece "Correct!
+    //Si la respuesta es correcta el botón cambia el fondo a verde y aparece "Correct!
     botonRes.style.backgroundColor = "#50a561";
     mensaje.id = "correcto";
     mensaje.innerHTML = "Correct!";
@@ -142,7 +150,7 @@ function reiniciarJuego() {
 
   //Creo botón de reiniciar juego
   let botonReiniciarJuego = document.createElement("button");
-  botonReiniciarJuego.className = "boton-start";
+  botonReiniciarJuego.className = "boton-replay";
   botonReiniciarJuego.setAttribute("style", "display:block");
   botonReiniciarJuego.innerHTML = "Play again!";
   //Añado manejador de eventos para que al hacer click reinicie el juego
@@ -159,6 +167,19 @@ function reiniciarJuego() {
     obtenerDatos();
   });
   document.getElementById("juego").appendChild(botonReiniciarJuego);
+  registrarScore();
+}
+
+function registrarScore() {
+  let registrarScore = document.createElement("button");
+  registrarScore.className = "boton-formulario";
+  registrarScore.setAttribute("style", "display:block");
+  registrarScore.innerHTML = "Register score";
+  registrarScore.addEventListener("click", function () {
+    //JQUERY al hacer click en el botón se despliega el formulario de registro
+    $("#formulario").slideToggle("slow");
+  });
+  document.getElementById("juego").appendChild(registrarScore);
 }
 
 //FUNCIÓN TIEMPO JUEGO 1 MINUTO 30 segundos
@@ -170,7 +191,7 @@ function cuentaAtras() {
 
   if (segundo == 0) {
     minuto = 0;
-    segundo = 10;
+    segundo = 1;
   }
   segundo -= 1;
 

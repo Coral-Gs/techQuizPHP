@@ -4,7 +4,7 @@ let preguntas = []; //Array global de preguntas
 let contador = 0; //Contador global de preguntas
 let puntuacion = 0; //Puntuación de partida
 let minuto = 0;
-let segundo = 30;
+let segundo = 1;
 let cuentaAtrasID;
 
 //FUNCIÓN LLAMADA API

@@ -35,6 +35,7 @@ footer {
 #mensaje-final {
   border-color: rgb(123, 63, 182);
   border-radius: 0.5em;
+  border-width: 3px;
   border-style: solid;
   color: #000;
   font-size: 25px;
@@ -58,6 +59,74 @@ footer {
 
 .boton-start:hover {
   background-color: rgb(0, 0, 0);
+  transition: 0.2s;
+}
+
+.boton-replay {
+  border-style: none;
+  border-radius: 0.5em;
+  background-color: rgb(123, 63, 182);
+  color: #fff;
+  font-size: 25px;
+  padding: 20px;
+  cursor: pointer;
+  max-width: fit-content;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.boton-replay:hover {
+  background-color: rgb(0, 0, 0);
+  transition: 0.2s;
+}
+
+.boton-formulario {
+  border-style: none;
+  border-radius: 0.5em;
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+  font-size: 25px;
+  padding: 20px;
+  cursor: pointer;
+  max-width: fit-content;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.boton-formulario:hover {
+  background-color: #fff;
+  border-style: solid;
+  border-color: rgb(123, 63, 182);
+  color: #000;
+  transition: 0.2s;
+}
+
+/*Estilo formulario*/
+
+input {
+  border-radius: 0.5em;
+  border-style: solid;
+  border-color: rgb(123, 63, 182);
+  font-size: 18px;
+  padding: 10px;
+  margin: 5px;
+}
+
+#boton-registrar {
+  border-style: none;
+  border-radius: 0.5em;
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#boton-registrar:hover {
+  background-color: #434242;
+  border-style: solid;
+  color: #fff;
   transition: 0.2s;
 }
 
