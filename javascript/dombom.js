@@ -1,20 +1,22 @@
 //Cuando la ventana se carga llamo a la función inicio
-//para activar la funcionalidad del boton Start
-window.addEventListener("load", inicio);
+window.onload = inicio;
 
-//El boton Start llama a la función iniciarJuego
+//FUNCIÓN INICIO prepara los manejadores de eventos y los efectos del DOM
 function inicio() {
-  //JQUERY añado efecto inicial al título para que aumente de tamaño de manera animada
+  //EFECTOS JQUERY
+  //Efecto inicial al título para que aumente de tamaño de manera animada
   $(document).ready(function () {
     $("#titulo").animate({ fontSize: "2.7em" }, "slow");
   });
   //Oculto formulario de registro para mostrar al final
   $("#formulario").hide();
-  //Añado manejadores de eventos a botones del DOM
+
+  //BOTÓN INICIAR JUEGO
   document.getElementById("start").addEventListener("click", iniciarJuego);
+  //BOTÓN REGISTRAR PUNTUACIÓN
   document
     .getElementById("boton-registrar")
-    .addEventListener("click", (event) => {
+    .addEventListener("click", function (event) {
       event.preventDefault();
       validarCampos();
     });
@@ -144,13 +146,10 @@ function reiniciarJuego() {
   mensajeFinal.innerHTML = "Game Over!<br>Final score: " + puntuacion;
   juego.appendChild(mensajeFinal);
 
-  //JQUERY animación que hace aparecer el mensaje final gradualmente
-  $("#mensaje-final").hide();
-  $("#mensaje-final").fadeIn(2000);
-
   //Creo botón de reiniciar juego
   let botonReiniciarJuego = document.createElement("button");
   botonReiniciarJuego.className = "boton-replay";
+  botonReiniciarJuego.id = "boton-replay";
   botonReiniciarJuego.setAttribute("style", "display:block");
   botonReiniciarJuego.innerHTML = "Play again!";
   //Añado manejador de eventos para que al hacer click reinicie el juego
@@ -167,10 +166,13 @@ function reiniciarJuego() {
     obtenerDatos();
   });
   document.getElementById("juego").appendChild(botonReiniciarJuego);
-  registrarScore();
+
+  botonRegistrarScore();
+  mostrarScore();
+  animacionFinal();
 }
 
-function registrarScore() {
+function botonRegistrarScore() {
   let registrarScore = document.createElement("button");
   registrarScore.className = "boton-formulario";
   registrarScore.setAttribute("style", "display:block");
@@ -229,4 +231,15 @@ function mostrarMensajeError() {
     "Sorry! The TechQuiz game is not available right now.<br>Please try again later...";
 }
 
-//Manejador de evento incial
+//JQUERY animación que hace aparecer elementos finales de manera gradual
+
+function animacionFinal() {
+  $("#mensaje-final").hide();
+  $("#mensaje-final").fadeIn(2000);
+  $("#boton-replay").hide();
+  $("#boton-replay").fadeIn(2000);
+  $(".boton-formulario").hide();
+  $(".boton-formulario").fadeIn(2000);
+  $("#scores").hide();
+  $("#scores").fadeIn(2000);
+}
