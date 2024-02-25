@@ -1,3 +1,4 @@
+<!--PROYECTO EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -40,26 +41,25 @@
         required
       /><br />
       <input
-        type="text"
+        type="tel"
         name="phone"
         id="phone"
         placeholder="phone"
         minlength="9"
         maxlength="9"
-        pattern="[0-9]+"
+        pattern="[0-9]{9}"
         required
       /><br />
       I'm over 18<input type="checkbox" name="edad" id="edad" /><br />
-      <input type="submit" name="registrar" id="boton-registrar" value="Registrar" />
-          <div id="avisos"></div>
-
+      <input type="submit" name="registrar" id="boton-registrar" value="Register" />
+      <div id="avisos"></div>
     </form>
     <div id="scores"></div>
     </section>
     <footer>
       <div>Coded with ♡ by Coral Gutiérrez</div>
       <hr />
-      <div>Open Trivia DataBase - Creative Commons Licence</div>
+      <div>Open Trivia DataBase - Creative Commons License</div>
     </footer>
     <!--JS que maneja API-->
     <script src="javascript/api.js"></script>

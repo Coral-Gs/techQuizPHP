@@ -242,3 +242,7 @@ td {
   margin-bottom: 20px;
   width: fit-content;
 }
+
+#mensajeError {
+  color: red;
+}
