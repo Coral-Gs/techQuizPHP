@@ -1,3 +1,7 @@
+<!--EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
+
+<!--Programa PHP para acceder a la base de datos techquiz y agregar un nuevo registro de usuario->
+
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -19,10 +23,10 @@ try {
     //Le indico con el atributo ATTR_ERRMODE que si hay algún error en la conexión 
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    //Creo sentencia SQL que solicita todos los registros ordenados por score de mayor a menor
+    //Creo sentencia SQL que inserta los datos
     $sql = 'INSERT INTO user(name, email, date, score, phone) VALUES(:name,:email,:date,:score,:phone)';
 
-    //Preparo la consulta, uno parámetros y ejecuto
+    //Preparo la consulta
     $consulta = $conexion->prepare($sql);
     //Uno parámetros
     $consulta->bindParam(':name', $nombre);
@@ -30,7 +34,6 @@ try {
     $consulta->bindParam(':date', $date);
     $consulta->bindParam(':score', $score);
     $consulta->bindParam(':phone', $phone);
-
 
     //Ejecuto la consulta
     $consulta->execute();

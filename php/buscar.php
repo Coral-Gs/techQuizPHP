@@ -1,3 +1,7 @@
+<!--EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
+
+<!--Programa PHP para acceder a la base de datos techquiz y verificar si existe o no un email dado-->
+
 <?php
 
 header("Content-Type: application/json; charset=UTF-8");
@@ -16,19 +20,21 @@ try {
     //Le indico con el atributo ATTR_ERRMODE que si hay algún error en la conexión
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    //Creo sentencia SQL que solicita todos los registros ordenados por score de mayor a menor
+    //Creo sentencia SQL que solicita mostrar un registro con un determinado email
     $sql = 'SELECT * FROM user WHERE email=:email';
 
     //Preparo la consulta, uno parámetros y ejecuto
     $consulta = $conexion->prepare($sql);
     $consulta->bindParam(':email', $email);
     $consulta->execute();
-    //Retorna la imagen del producto
+    //Retorna el resultado de la consulta
     $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
+    //Si existen resultados, devuelve TRUE
     if (count($resultados) > 0) {
         echo json_encode(true);
     } else {
+        //De lo contrario devuelve FALSE
         echo json_encode(false);
     }
 

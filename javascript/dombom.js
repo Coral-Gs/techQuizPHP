@@ -1,33 +1,25 @@
 //EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ
-//DOM, BOM, EVENTOS Y JQUERY
-//Elementos DOM utilizados:
-//selectores: getElementById(), querySelectorAll(),appendChild(), setAttribute()
-//propiedades: .id, .className, .style, .innerHTML,
-//Elementos BOM utilizados:
-//Eventos: addEventListener()
-//Jquery: animate(), fadeIn(), slideToggle(), hide()
-//Otros elementos y funciones: .toString(), .padStart(), Date, Math
+
+//MANEJO DEL DOM, BOM, EVENTOS Y JQUERY
 
 //Cuando la ventana se carga llamo a la función inicio
 window.onload = inicio;
 
 //VARIABLES GLOBALES DEL JUEGO
-
-let preguntas = []; //Array global de preguntas
-let contador = 0; //Contador global de preguntas
-let puntuacion = 0; //Puntuación de partida
+let preguntas = {};
+let contador = 0;
+let puntuacion = 0;
 let minuto = 1;
 let segundo = 0;
 let cuentaAtrasID;
 
 //FUNCIÓN INICIO prepara los manejadores de eventos y los efectos del DOM
 function inicio() {
-  //EFECTOS JQUERY
-  //Efecto inicial al título para que aumente de tamaño de manera animada
+  //JQUERY: Efecto inicial al título para que aumente de tamaño de manera animada
   $(document).ready(function () {
     $("#titulo").animate({ fontSize: "2.7em" }, "slow");
   });
-  //Oculto formulario de registro para mostrar al final
+  //JQUERY: Oculto formulario de registro para mostrar al final
   $("#formulario").hide();
 
   //Añado manejadores de eventos a botones presentes en el DOM
@@ -40,13 +32,18 @@ function inicio() {
     });
 }
 
-//
+//FUNCIÓN INICIAR JUEGO
+//Obtiene datos de la API, cambia el título y elimino el botón de iniciar juego
 function iniciarJuego() {
   obtenerDatos(); //Obtengo los datos de la API
-  document.getElementById("titulo").innerHTML = "The TechQuiz"; //El título cambia
-  document.getElementById("start").style.display = "none"; //El botón de Start desaparece una vez se inicia el juego
+  document.getElementById("titulo").innerHTML = "The TechQuiz"; //Cambio título
+  document
+    .getElementById("contenedor-juego")
+    .removeChild(document.getElementById("start")); //Elimino botón
 }
 
+//Función para generar pregunta
+//Utiliza la variable global de preguntas y el contador para crear una pregunta y agregarla al DOM
 function generarPregunta() {
   //Creo y añado pregunta
   let pregunta = preguntas[contador].question;
@@ -55,6 +52,8 @@ function generarPregunta() {
   document.getElementById("juego").appendChild(contenedorPregunta);
 }
 
+//Función para generar respuestas
+//Utiliza la variable global de preguntas y el contador para crear las respuestas
 function generarRespuestas() {
   //Creo y añado respuestas
   let respuestaCorrecta = preguntas[contador].correct_answer;
@@ -63,7 +62,7 @@ function generarRespuestas() {
   aleatorias(respuestas); //Desordeno las respuestas
   crearBotonesRespuestas(respuestas, respuestaCorrecta);
 }
-
+//Función para crear botones de respuestas
 function crearBotonesRespuestas(respuestas, resCorrecta) {
   //Recorro las posibles respuestas, creando y añadiendo botones para cada una
   let respuestaCorrecta = resCorrecta;
@@ -72,7 +71,7 @@ function crearBotonesRespuestas(respuestas, resCorrecta) {
     botonRespuesta.className = "boton-respuesta";
     botonRespuesta.innerHTML = respuesta;
 
-    //Añado manejador de evento a los botones para comprobar la respuesta
+    //Añado manejador de evento a los botones para comprobar si es la respuesta correcta o no
     botonRespuesta.addEventListener("click", () =>
       validarRespuesta(botonRespuesta, respuestaCorrecta)
     );
@@ -81,7 +80,7 @@ function crearBotonesRespuestas(respuestas, resCorrecta) {
   });
 }
 
-//FUNCIÓN PARA MOSTRAR PREGUNTAS Y RESPUESTAS
+//Función para mostrar una pregunta, las respuestas y la puntuación
 function mostrarPregunta() {
   //Elimino datos de preguntas anteriores si las hubiera
   document.getElementById("juego").innerHTML = "";
@@ -93,13 +92,13 @@ function mostrarPregunta() {
   document.getElementById("puntuacion").innerHTML = "Score: " + puntuacion;
 }
 
-//FUNCIÓN PARA VALIDAR RESPUESTA
+//Función para validar la respuesta seleccionada
 function validarRespuesta(botonRes, resCorrecta) {
   let respuestaCorrecta = descodificar(resCorrecta);
   let mensaje = document.createElement("p");
 
+  //Si la respuesta es correcta el botón cambia el fondo a verde, aparece el mensaje Correct!
   if (botonRes.innerHTML == respuestaCorrecta) {
-    //Si la respuesta es correcta el botón cambia el fondo a verde y aparece "Correct!
     botonRes.style.backgroundColor = "#50a561";
     mensaje.id = "correcto";
     mensaje.innerHTML = "Correct!";
@@ -120,40 +119,41 @@ function validarRespuesta(botonRes, resCorrecta) {
   setTimeout(siguientePregunta, 2 * 1000);
 }
 
-//FUNCIÓN PARA PASAR DE PREGUNTA
+//Función para pasar de pregunta
 function siguientePregunta() {
-  //Si hay más datos en el array preguntas y si los segundos de la cuenta atrás son >1 muestro
+  //Si hay más datos en la variable preguntas y si los segundos de la cuenta atrás son >0
   //añado uno al contador de preguntas y muestro la siguiente pregunta
   if (contador < preguntas.length - 1 && segundo > 0) {
     contador = contador + 1;
     mostrarPregunta();
   } else {
-    //Si no hay más preguntas en el array llamo a la función reiniciarJuego()
-    reiniciarJuego();
+    //Si no hay más preguntas o el tiempo se ha agotado finaliza el juego
+    finalizarJuego();
   }
 }
 
 //Función para descodificar la respuesta correcta
-//Utilizando expresiones regulares y replace() no cambiaba todas las comillas de las respuestas
-//Así que esta función permite transformar las respuestas codificadas de la API a HTML y compararlas con el botón
-//presionado por el usuario
+//Transforma las respuestas codificadas de la API a HTML para poder compararlas después con el HTML de la respuesta seleccionada
+//De manera que aparezcan bien los caracteres especiales como apóstrofes y la comparación se realice correctamente
 function descodificar(respuestaCorrecta) {
   let resDescodificada = document.createElement("p");
   resDescodificada.innerHTML = respuestaCorrecta;
   return resDescodificada.innerHTML;
 }
 
+//Función para desorderan de manera aleatoria el array de respuestas
 function aleatorias(respuestas) {
   return respuestas.sort(function () {
     return Math.random() - 0.5;
   });
 }
 
-//FUNCIÓN MOSTRAR PUNTUACIÓN FINAL Y REINICIAR JUEGO
-function reiniciarJuego() {
+//Función para finalizar el juego muestra la puntuación final y opciones
+//Vaciando los contenedores del juego y reseteando la cuenta atrás
+function finalizarJuego() {
   //Reseteo cuenta atrás
   clearTimeout(cuentaAtrasID);
-  //Reseteo lo que hay en juego
+  //Reseteo los datos del juego
   document.getElementById("juego").innerHTML = "";
   document.getElementById("cuenta-atras").innerHTML = "";
   document.getElementById("cuenta-atras").className = "";
@@ -166,6 +166,7 @@ function reiniciarJuego() {
   animacionFinal();
 }
 
+//Función para mostrar el mensaje de puntuación obtenida
 function mostrarPuntuacionFinal() {
   //Creo mensaje final con puntuación
   let mensajeFinal = document.createElement("div");
@@ -174,6 +175,7 @@ function mostrarPuntuacionFinal() {
   juego.appendChild(mensajeFinal);
 }
 
+//Función que crea un botón para reiniciar el juego
 function botonReiniciarJuego() {
   //Creo botón de reiniciar juego
   let botonReiniciarJuego = document.createElement("button");
@@ -181,13 +183,14 @@ function botonReiniciarJuego() {
   botonReiniciarJuego.innerHTML = "Play again!";
   botonReiniciarJuego.setAttribute("style", "display:block");
   //Añado manejador de eventos para que al hacer click reinicie el juego
-  botonReiniciarJuego.addEventListener("click", resetearJuego);
+  botonReiniciarJuego.addEventListener("click", reiniciarJuego);
   document.getElementById("juego").appendChild(botonReiniciarJuego);
 }
 
-function resetearJuego() {
-  //Reseteo variables globales del juego y contenedor de scores
-  //y vuelvo a llamar a la API para obtener nuevas preguntas
+//Función para reiniciar el juego
+//Reseto variables globales del juego y vacío contenedor del ranking y formulario
+//y vuelvo a llamar a la API para obtener nuevas preguntas
+function reiniciarJuego() {
   minuto = 1;
   segundo = 0;
   preguntas = [];
@@ -201,38 +204,41 @@ function resetearJuego() {
   obtenerDatos();
 }
 
+//Función para crear el botón de registrar la puntuación
+//que despliega el formulario de registro
 function botonRegistrarScore() {
   let registrarScore = document.createElement("button");
   registrarScore.className = "boton-formulario";
   registrarScore.innerHTML = "Register score";
   registrarScore.setAttribute("style", "display:block");
   registrarScore.addEventListener("click", function () {
-    //JQUERY al hacer click en el botón se despliega el formulario de registro
+    //JQUERY: al hacer click en el botón se despliega el formulario de registro
     $("#formulario").slideToggle("slow");
   });
   document.getElementById("juego").appendChild(registrarScore);
 }
 
-//FUNCIÓN TIEMPO JUEGO 1 MINUTO 30 segundos
-
+//Función cuenta atrás para delimitar el tiempo de juego en cuenta regresiva
 function cuentaAtras() {
   //Establezco un temporizador con setTimeout que llama a la misma función
-  //De manera recursiva para ir mostrando los segundos simulando una cuenta atrás
+  //De manera recursiva para ir mostrando los segundos en descenso simulando una cuenta atrás
   cuentaAtrasID = setTimeout(cuentaAtras, 1 * 1000);
+
   if (minuto == 1 && segundo == 0) {
     minuto = 0;
     segundo = 60;
   }
   segundo -= 1;
+
   mostrarTiempo();
 
-  //Cuando los minutos y los segundos llegan a 0 finaliza el tiempo de juego
-  //llamo a la función reiniciarJuego
+  //Cuando los minutos y los segundos llegan a 0 finaliza el juego
   if (minuto == 0 && segundo == 0) {
-    reiniciarJuego(); // Reinicio juego
+    finalizarJuego(); //
   }
 }
 
+//Función para mostrar el tiempo restante en el DOM
 function mostrarTiempo() {
   //Formateo los minutos y segundos para que tengan 2 dígitos siempre
   let minutoFormat = minuto.toString().padStart(2, "0");
@@ -240,7 +246,7 @@ function mostrarTiempo() {
   let cuentaAtrasHTML = document.getElementById("cuenta-atras");
 
   //Aplico estilo especial con dígitos en rojo y más grandes cuando quedan 5 segundos
-  //como si el tiempo palpitara
+  //como si el tiempo palpitara, avisando de que la partida está próxima a finalizar
   if (minuto == 0 && segundo <= 5 && segundo >= 0) {
     cuentaAtrasHTML.setAttribute(
       "style",
@@ -254,6 +260,7 @@ function mostrarTiempo() {
   cuentaAtrasHTML.innerHTML = minutoFormat + ":" + segundoFormat;
 }
 
+//Muestra un mensaje de error en caso de que la API no esté disponible
 function mostrarMensajeError() {
   document.getElementById("cuenta-atras").innerHTML = "";
   document.getElementById("puntuacion").innerHTML = "";
@@ -261,7 +268,7 @@ function mostrarMensajeError() {
     "Sorry! The TechQuiz game is not available right now.<br>Please try again later...";
 }
 
-//JQUERY animación que hace aparecer elementos finales de manera gradual
+//JQUERY animaciones que hacen aparecer elementos finales del juego de manera gradual
 function animacionFinal() {
   $("#mensaje-final").hide();
   $("#mensaje-final").fadeIn(2000);

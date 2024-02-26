@@ -1,3 +1,6 @@
+<!--EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
+
+<!--Programa PHP para acceder a la base de datos techquiz y obtener todos los datos de los usuarios-->
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -16,12 +19,11 @@ try {
     //Creo sentencia SQL que solicita todos los registros ordenados por score de mayor a menor
     $sql = 'SELECT * FROM user ORDER BY score DESC';
 
-    //Preparo la consulta, uno parámetros y ejecuto
+    //Preparo la consulta y ejecuto
     $consulta = $conexion->prepare($sql);
-    //Uno parámetros
-    //$consulta->bindParam(':pais', $pais);
     $consulta->execute();
-    //Retorna la imagen del producto
+
+    //Retorna resultados en formato JSON
     $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($resultados);
 

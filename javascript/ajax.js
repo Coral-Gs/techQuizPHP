@@ -1,8 +1,14 @@
+//EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ
+
+//AJAX GET Y POST
+
+//Función para mostrar el ranking de puntuaciones de la base de datos
 function mostrarScore() {
-  let ajax = new XMLHttpRequest();
+  let ajax = new XMLHttpRequest(); //Creo el objeto ajax
   let scoresCont = document.getElementById("scores");
 
   ajax.onreadystatechange = function () {
+    //Compruebo si el estado de la solicitud es 4 (listo) y 200 (correcto)
     if (ajax.readyState === 4 && ajax.status === 200) {
       //Parseo la respuesta que devuelve y creo la tabla con los resultados
       let scores = JSON.parse(ajax.responseText);
@@ -14,7 +20,6 @@ function mostrarScore() {
       scoresCont.innerHTML = "Sorry! We are unable to show current results";
     }
   };
-
   ajax.open("GET", "php/mostrar.php", true);
   ajax.send();
 }
@@ -28,6 +33,7 @@ function formatearFecha(resultados) {
   return fecha;
 }
 
+//Función para crear la tabla de los resultados
 function crearTablaScores(resultados) {
   let scores = resultados;
   let tabla = document.getElementById("scores");
@@ -61,8 +67,10 @@ function crearTablaScores(resultados) {
   tabla.innerHTML = tablaHTML;
 }
 
+//Función para registrar la puntuación obtenida en la partida
 function registrarScore() {
-  let ajax = new XMLHttpRequest();
+  let ajax = new XMLHttpRequest(); //Creo objeto ajax
+  //Recojo los datos de los campos que voy a registrar
   let nombre = document.getElementById("nombre").value;
   let email = document.getElementById("email").value;
   let score = puntuacion;
@@ -70,12 +78,15 @@ function registrarScore() {
   let date = fechaActual();
 
   ajax.onreadystatechange = function () {
+    //Compruebo si el estado de la solicitud es 4 (listo) y 200 (correcto)
     if (ajax.readyState === 4 && ajax.status === 200) {
-      //Cargo de nuevo la tabla de registros de usuarios y puntuaciones
+      //Una vez insertado el nuevo registro en la base de datos
+      //cargo de nuevo la tabla del ranking de usuarios y puntuaciones
+      //para que aparezca actualizada
       mostrarScore();
     }
   };
-
+  //Envío cadena con todos los datos mediante el método POSTs
   ajax.open("POST", "php/agregar.php", true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(
@@ -94,15 +105,18 @@ function fechaActual() {
   return fechaHoy.toString();
 }
 
+//Función para comprobar si un email dado está ya en la base de datos
 function comprobarEmail(emailForm, mensajes) {
   let ajax = new XMLHttpRequest();
   let email = emailForm.value;
 
   ajax.onreadystatechange = function () {
+    //Compruebo si el estado de la solicitud es 4 (listo) y 200 (correcto)
     if (ajax.readyState === 4 && ajax.status === 200) {
       let emailExiste = JSON.parse(ajax.responseText);
 
-      // Verificar si el correo electrónico existe
+      //Verifica si el correo electrónico existe
+      //Si es así muestra un mensaje de error
       if (emailExiste) {
         mensajes.push(
           "The email is already registered. Please enter another email"
@@ -116,6 +130,7 @@ function comprobarEmail(emailForm, mensajes) {
     mostrarAvisos(mensajes);
   };
 
+  //Envío el dato del email mediante solicitud POST
   ajax.open("POST", "php/buscar.php", true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send("email=" + email);
