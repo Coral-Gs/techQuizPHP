@@ -14,7 +14,7 @@ function mostrarScore() {
       let scores = JSON.parse(ajax.responseText);
       crearTablaScores(scores);
 
-      //Si el el estado es 4 pero el estatus no es 200, muestro mensaje de error
+      //Si el estado es 4 pero el estatus no es 200, muestro mensaje de error
     } else if (ajax.readyState === 4) {
       scoresCont.innerHTML = "";
       scoresCont.innerHTML = "Sorry! We are unable to show current results";
@@ -24,8 +24,8 @@ function mostrarScore() {
   ajax.send();
 }
 
-//Función para formatear fecha de YYYY-MM-DD a DD-MM-YYYY con la función split()
-//para pasar de String a un Array y manejo las posiciones para mostrar los datos commo quiero
+//Función para formatear fecha de AAAA-MM-DD a DD-MM-AAAA con la función split()
+//para pasar de String a un Array y manejo las posiciones para mostrar los datos como quiero
 function formatearFecha(resultados) {
   let fechaOrigen = resultados.date;
   let fechaSplit = fechaOrigen.split("-");
@@ -86,7 +86,7 @@ function registrarScore() {
       mostrarScore();
     }
   };
-  //Envío cadena con todos los datos mediante el método POSTs
+  //Envío cadena con todos los datos mediante el método POST
   ajax.open("POST", "php/agregar.php", true);
   ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   ajax.send(

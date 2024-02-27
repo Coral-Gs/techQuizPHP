@@ -1,10 +1,10 @@
-<!--EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
-
-<!--Programa PHP para acceder a la base de datos techquiz y agregar un nuevo registro de usuario->
-
 <?php
+//EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ
+//Programa PHP para acceder a la base de datos techquiz y agregar un nuevo registro de usuario
+
 header("Content-Type: application/json; charset=UTF-8");
 
+//Variables que recibo por POST
 $nombre = $_POST["nombre"];
 $email = $_POST["email"];
 $score = $_POST["score"];

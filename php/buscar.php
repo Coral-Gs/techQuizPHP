@@ -1,11 +1,12 @@
-<!--EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
-
-<!--Programa PHP para acceder a la base de datos techquiz y verificar si existe o no un email dado-->
-
 <?php
+
+//EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ
+
+//Programa PHP para acceder a la base de datos techquiz y verificar si existe o no un email dado
 
 header("Content-Type: application/json; charset=UTF-8");
 
+//Dato recibido por POST
 $email = $_POST["email"];
 
 //Datos de conexión

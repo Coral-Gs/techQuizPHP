@@ -1,3 +1,5 @@
+/*PROYECTO EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ*/
+
 html,
 body {
   font-family: "Courier New", Courier, monospace;
@@ -103,7 +105,7 @@ footer {
   transition: 0.2s;
 }
 
-/*Estilo formulario*/
+/*Estilos formulario registro*/
 
 input {
   border-radius: 0.5em;
@@ -180,6 +182,7 @@ cuando ya se ha seleccionado uno y están desactivados*/
   font-size: 20px;
   font-weight: 600;
 }
+/*Estilos marcadores y puntuación*/
 
 #marcadores {
   margin: 30px 100px 40px;
@@ -203,9 +206,7 @@ cuando ya se ha seleccionado uno y están desactivados*/
   text-align: center;
 }
 
-/*Estilos formulario de registro*/
-
-/* Estilos para la tabla */
+/* Estilos para la tabla ranking de puntuación */
 table {
   border-collapse: collapse;
   border-radius: 10px;
@@ -213,20 +214,17 @@ table {
   width: 100%;
 }
 
-/* Estilos para las celdas de la tabla */
 th,
 td {
   padding: 15px;
   text-align: left;
 }
 
-/* Estilos para el encabezado de la tabla */
 th {
   background-color: #333;
   color: white;
 }
 
-/* Estilos para las celdas de datos */
 td {
   background-color: #111;
   color: white;

@@ -1,7 +1,8 @@
-<!--EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ-->
-
-<!--Programa PHP para acceder a la base de datos techquiz y obtener todos los datos de los usuarios-->
 <?php
+//EXAMEN DESARROLLO ENTORNO CLIENTE - CORAL GUTIÉRREZ SÁNCHEZ
+
+//Programa PHP para acceder a la base de datos techquiz y obtener todos los datos de los usuarios
+
 header("Content-Type: application/json; charset=UTF-8");
 
 //Datos de conexión

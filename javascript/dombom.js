@@ -62,6 +62,7 @@ function generarRespuestas() {
   aleatorias(respuestas); //Desordeno las respuestas
   crearBotonesRespuestas(respuestas, respuestaCorrecta);
 }
+
 //Función para crear botones de respuestas
 function crearBotonesRespuestas(respuestas, resCorrecta) {
   //Recorro las posibles respuestas, creando y añadiendo botones para cada una
@@ -75,7 +76,7 @@ function crearBotonesRespuestas(respuestas, resCorrecta) {
     botonRespuesta.addEventListener("click", () =>
       validarRespuesta(botonRespuesta, respuestaCorrecta)
     );
-    //Añado botón al div juego
+    //Añado botones al div juego
     document.getElementById("juego").appendChild(botonRespuesta);
   });
 }
@@ -159,6 +160,7 @@ function finalizarJuego() {
   document.getElementById("cuenta-atras").className = "";
   document.getElementById("puntuacion").innerHTML = "";
 
+  //Muestro puntuación final y botones con animación final
   mostrarPuntuacionFinal();
   botonReiniciarJuego();
   botonRegistrarScore();

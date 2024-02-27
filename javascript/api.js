@@ -22,7 +22,7 @@ function obtenerDatos() {
     .catch((err) => {
       console.log("Solicitud fallida", err);
       //Llamo a la función para mostrar un mensaje de error personalizado al usuario
-      //Solicitando que vuelva a intentar jugar más tarde
+      //solicitando que vuelva a intentar jugar más tarde
       mostrarMensajeError();
     });
 }

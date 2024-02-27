@@ -16,7 +16,7 @@ function validarCampos() {
   validarEdad(edad, mensajes);
   //Hago una llamada AJAX para comprobar si el email ya existe en la BD
   comprobarEmail(email, mensajes);
-  //Muestro los mensajes de error desde la función de la llamada AJAX comprobarEmail
+  //Muestro los mensajes de error desde la función de la llamada AJAX comprobarEmail()
   //para que aparezcan una vez se ha comprobado el email de manera asíncrona
   //Ya que si no solo me aparecen los mensajes de validación de los datos que no requiren AJAX
 }
